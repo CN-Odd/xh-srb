@@ -61,5 +61,15 @@ public class Swagger2Config {
 
     }
 
+    @Bean
+    public Docket ossApiConfig() {
+
+        return new Docket(DocumentationType.SWAGGER_2)
+                .groupName("ossApi")
+                .select()
+                .paths(Predicates.and(PathSelectors.regex("/api/oss.*")))
+                .build();
+    }
+
 
 }
