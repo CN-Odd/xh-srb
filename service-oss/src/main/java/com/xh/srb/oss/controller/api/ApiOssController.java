@@ -2,13 +2,12 @@ package com.xh.srb.oss.controller.api;
 
 import com.xh.common.exception.BusinessException;
 import com.xh.common.result.R;
-import com.xh.common.result.ResponseEum;
+import com.xh.common.result.ResponseEnum;
 import com.xh.srb.oss.service.OssService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -38,7 +37,7 @@ public class ApiOssController {
             InputStream inputStream = file.getInputStream();
             url = ossService.upload(filename, model, inputStream);
         } catch (IOException e) {
-            throw new BusinessException(ResponseEum.UPLOAD_ERROR, e);
+            throw new BusinessException(ResponseEnum.UPLOAD_ERROR, e);
         }
 
 

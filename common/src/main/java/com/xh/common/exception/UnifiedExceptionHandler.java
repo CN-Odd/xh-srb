@@ -1,7 +1,7 @@
 package com.xh.common.exception;
 
 import com.xh.common.result.R;
-import com.xh.common.result.ResponseEum;
+import com.xh.common.result.ResponseEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.ConversionNotSupportedException;
 import org.springframework.beans.TypeMismatchException;
@@ -37,7 +37,7 @@ public class UnifiedExceptionHandler {
     @ExceptionHandler(value = BadSqlGrammarException.class)
     public R handleBadSqlException(Exception ex) {
         log.error(ex.getMessage());
-        return R.setResult(ResponseEum.BAD_SQL_Grammar);
+        return R.setResult(ResponseEnum.BAD_SQL_Grammar);
     }
 
     @ExceptionHandler(value = BusinessException.class)
@@ -68,6 +68,6 @@ public class UnifiedExceptionHandler {
     public R handleServletException(Exception e) {
         log.error(e.getMessage(), e);
         //SERVLET_ERROR(-102, "servlet请求异常"),
-        return R.setResult(ResponseEum.SERVLET_ERROR);
+        return R.setResult(ResponseEnum.SERVLET_ERROR);
     }
 }

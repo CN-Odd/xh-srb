@@ -11,23 +11,23 @@ public class R {
     private String msg;
     private Map<String, Object> data = new HashMap<>();
 
-    private R(ResponseEum responseEum) {
-        this.code = responseEum.getCode();
-        this.msg = responseEum.getMsg();
+    private R(ResponseEnum responseEnum) {
+        this.code = responseEnum.getCode();
+        this.msg = responseEnum.getMsg();
     }
 
     public static R ok() {
-        R r = new R(ResponseEum.SUCCESS);
+        R r = new R(ResponseEnum.SUCCESS);
         return r;
     }
 
     public static R error() {
-        R r = new R(ResponseEum.ERROR);
+        R r = new R(ResponseEnum.ERROR);
         return r;
     }
 
-    public static R setResult(ResponseEum responseEum) {
-        return new R(responseEum);
+    public static R setResult(ResponseEnum responseEnum) {
+        return new R(responseEnum);
     }
 
     public R setResultData(String key, Object val) {

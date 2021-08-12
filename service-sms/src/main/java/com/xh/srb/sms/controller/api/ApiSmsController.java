@@ -2,9 +2,9 @@ package com.xh.srb.sms.controller.api;
 
 import com.xh.common.exception.Assert;
 import com.xh.common.result.R;
-import com.xh.common.result.ResponseEum;
-import com.xh.common.utils.RandomUtils;
-import com.xh.common.utils.RegexValidateUtils;
+import com.xh.common.result.ResponseEnum;
+import com.xh.common.util.RandomUtils;
+import com.xh.common.util.RegexValidateUtils;
 import com.xh.srb.sms.service.SmsService;
 import com.xh.srb.sms.util.SmsProperties;
 import io.swagger.annotations.Api;
@@ -33,11 +33,11 @@ public class ApiSmsController {
     public R send(
             @ApiParam("手机号")
             @PathVariable(value = "mobile") String mobile) {
-        Assert.notNull(mobile, ResponseEum.MOBILE_NULL_ERROR);
-        Assert.notTrue(RegexValidateUtils.checkCellphone(mobile), ResponseEum.MOBELE_ERROR);
+        Assert.isNull(mobile, ResponseEnum.MOBILE_NULL_ERROR);
+        Assert.notTrue(RegexValidateUtils.checkCellphone(mobile), ResponseEnum.MOBELE_ERROR);
         String key = "srb:sms:code:" + mobile;
         String code = redisTemplate.opsForValue().get(key);
-        Assert.isNull(code, ResponseEum.SMS_LIMIT_CONTROL_ERROR);
+        Assert.notNull(code, ResponseEnum.SMS_LIMIT_CONTROL_ERROR);
         code = RandomUtils.getFourBitRandom();
         smsService.send(mobile, SmsProperties.TEMPLATE_CODE, code);
         redisTemplate.opsForValue().set(key, code, 5, TimeUnit.MINUTES);

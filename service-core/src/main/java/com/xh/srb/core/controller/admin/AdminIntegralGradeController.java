@@ -3,7 +3,7 @@ package com.xh.srb.core.controller.admin;
 
 import com.xh.common.exception.Assert;
 import com.xh.common.result.R;
-import com.xh.common.result.ResponseEum;
+import com.xh.common.result.ResponseEnum;
 import com.xh.srb.core.pojo.entity.IntegralGrade;
 import com.xh.srb.core.service.IntegralGradeService;
 import io.swagger.annotations.Api;
@@ -59,7 +59,7 @@ public class AdminIntegralGradeController {
     public R save(
             @ApiParam(value = "积分等级对象", required = true)
             @RequestBody IntegralGrade integralGrade) {
-        Assert.notNull(integralGrade.getBorrowAmount(), ResponseEum.BORROW_AMOUNT_NULL_ERROR);
+        Assert.isNull(integralGrade.getBorrowAmount(), ResponseEnum.BORROW_AMOUNT_NULL_ERROR);
         boolean saved = integralGradeService.save(integralGrade);
         return saved ? R.ok().massage("新增积分等级成功！") : R.error().massage("新增积分等级失败！");
     }
