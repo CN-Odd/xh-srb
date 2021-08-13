@@ -1,6 +1,8 @@
 package com.xh.srb.core.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.xh.common.exception.Assert;
 import com.xh.common.result.ResponseEnum;
 import com.xh.common.util.MD5;
@@ -9,11 +11,13 @@ import com.xh.srb.core.mapper.UserAccountMapper;
 import com.xh.srb.core.pojo.entity.UserAccount;
 import com.xh.srb.core.pojo.entity.UserInfo;
 import com.xh.srb.core.mapper.UserInfoMapper;
+import com.xh.srb.core.pojo.query.UserInfoQuery;
 import com.xh.srb.core.pojo.vo.LoginVO;
 import com.xh.srb.core.pojo.vo.RegisterVO;
 import com.xh.srb.core.pojo.vo.UserInfoVO;
 import com.xh.srb.core.service.UserInfoService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,6 +35,7 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> i
 
     @Autowired
     private UserAccountMapper userAccountMapper;
+
     @Override
     public void register(RegisterVO registerVO) {
         QueryWrapper<UserInfo> queryWrapper = new QueryWrapper<>();
@@ -81,5 +86,21 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> i
 
 
         return userInfoVO;
+    }
+
+    @Override
+    public IPage<UserInfo> listPage(Page<UserInfo> pageParam, UserInfoQuery userInfoQuery) {
+        if (userInfoQuery == null) {
+            return baseMapper.selectPage(pageParam, null);
+        }
+        Integer userType = userInfoQuery.getUserType();
+        Integer status = userInfoQuery.getStatus();
+        String mobile = userInfoQuery.getMobile();
+        QueryWrapper<UserInfo> wrapper = new QueryWrapper<>();
+        wrapper.eq(StringUtils.isNotBlank(mobile), "mobile", mobile)
+                .eq(status != null, "status", status)
+                .eq(userType != null, "user_type", userType);
+        Page<UserInfo> userInfoPage = baseMapper.selectPage(pageParam, wrapper);
+        return userInfoPage;
     }
 }

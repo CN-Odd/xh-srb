@@ -1,5 +1,6 @@
 package com.xh.srb.core.controller.api;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.xh.common.exception.Assert;
 import com.xh.common.result.R;
 import com.xh.common.result.ResponseEnum;
@@ -69,4 +70,6 @@ public class UserInfoController {
         Assert.notTrue(checkToken, ResponseEnum.LOGIN_AUTH_ERROR);
         return R.ok();
     }
+
+
 }
