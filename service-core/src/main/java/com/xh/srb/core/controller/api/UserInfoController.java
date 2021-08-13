@@ -1,6 +1,5 @@
 package com.xh.srb.core.controller.api;
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.xh.common.exception.Assert;
 import com.xh.common.result.R;
 import com.xh.common.result.ResponseEnum;
@@ -48,7 +47,7 @@ public class UserInfoController {
         Assert.notTrue(codeGen.equals(code), ResponseEnum.CODE_ERROR);
         userInfoService.register(registerVO);
 
-        return R.ok().massage("注册成功");
+        return R.ok().message("注册成功");
     }
 
     @ApiOperation("用户登录")
@@ -59,7 +58,7 @@ public class UserInfoController {
 
         UserInfoVO userInfoVO = userInfoService.login(loginVO, request.getRemoteAddr());
 
-        return R.ok().massage("登录成功").setResultData("userInfo", userInfoVO);
+        return R.ok().message("登录成功").setResultData("userInfo", userInfoVO);
     }
 
     @ApiOperation("令牌校验")

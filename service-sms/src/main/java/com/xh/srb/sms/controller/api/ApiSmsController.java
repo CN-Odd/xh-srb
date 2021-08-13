@@ -41,6 +41,6 @@ public class ApiSmsController {
         code = RandomUtils.getFourBitRandom();
         smsService.send(mobile, SmsProperties.TEMPLATE_CODE, code);
         redisTemplate.opsForValue().set(key, code, 5, TimeUnit.MINUTES);
-        return R.ok().massage("发送短信成功");
+        return R.ok().message("发送短信成功");
     }
 }

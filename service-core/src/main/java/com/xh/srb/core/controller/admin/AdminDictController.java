@@ -39,7 +39,7 @@ public class AdminDictController {
         try {
             InputStream inputStream = multipartFile.getInputStream();
             dictService.importData(inputStream);
-            return R.ok().massage("批量导入成功");
+            return R.ok().message("批量导入成功");
         } catch (Exception e) {
             throw new BusinessException(ResponseEnum.UPLOAD_ERROR);
         }

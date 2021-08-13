@@ -35,7 +35,7 @@ public class R {
         return this;
     }
 
-    public R massage(String msg) {
+    public R message(String msg) {
         this.msg = msg;
         return this;
     }

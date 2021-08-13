@@ -51,7 +51,7 @@ public class AdminIntegralGradeController {
             @PathVariable Long id) {
         boolean result = integralGradeService.removeById(id);
 
-        return result ? R.ok().massage("删除成功") : R.error().massage("删除失败");
+        return result ? R.ok().message("删除成功") : R.error().message("删除失败");
     }
 
     @ApiOperation(value = "新增积分等级")
@@ -61,7 +61,7 @@ public class AdminIntegralGradeController {
             @RequestBody IntegralGrade integralGrade) {
         Assert.isNull(integralGrade.getBorrowAmount(), ResponseEnum.BORROW_AMOUNT_NULL_ERROR);
         boolean saved = integralGradeService.save(integralGrade);
-        return saved ? R.ok().massage("新增积分等级成功！") : R.error().massage("新增积分等级失败！");
+        return saved ? R.ok().message("新增积分等级成功！") : R.error().message("新增积分等级失败！");
     }
 
     @ApiOperation(value = "根据id获取积分等级")
@@ -70,7 +70,7 @@ public class AdminIntegralGradeController {
             @ApiParam(value = "数据id")
             @PathVariable(name = "id") Long id) throws Exception {
         IntegralGrade integralGrade = integralGradeService.getById(id);
-        return null != integralGrade ? R.ok().setResultData("record", integralGrade) : R.error().massage("数据不存在");
+        return null != integralGrade ? R.ok().setResultData("record", integralGrade) : R.error().message("数据不存在");
     }
 
 
@@ -80,7 +80,7 @@ public class AdminIntegralGradeController {
             @ApiParam(value = "积分等级对象", required = true)
             @RequestBody IntegralGrade integralGrade) {
         boolean result = integralGradeService.updateById(integralGrade);
-        return result ? R.ok().massage("更新积分等级成功") : R.error().massage("更新积分等级失败");
+        return result ? R.ok().message("更新积分等级成功") : R.error().message("更新积分等级失败");
     }
 }
 

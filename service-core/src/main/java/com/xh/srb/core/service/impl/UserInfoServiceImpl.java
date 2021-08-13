@@ -103,4 +103,16 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> i
         Page<UserInfo> userInfoPage = baseMapper.selectPage(pageParam, wrapper);
         return userInfoPage;
     }
+
+    @Override
+    public void lock(Long id, Integer status) {
+//        UserInfo userInfo = baseMapper.selectById(id);
+//        Assert.isNull(userInfo, ResponseEnum.USER_NOT_FOUND);
+//        userInfo.setStatus(status);
+//        baseMapper.updateById(userInfo);
+        UserInfo userInfo = new UserInfo();
+        userInfo.setId(id);
+        userInfo.setStatus(status);
+        baseMapper.updateById(userInfo);
+    }
 }

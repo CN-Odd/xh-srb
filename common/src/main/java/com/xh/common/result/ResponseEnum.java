@@ -25,6 +25,7 @@ public enum ResponseEnum {
     CODE_ERROR(-203, "验证码错误"),
     MOBILE_EXIST_ERROR(-207, "手机已经注册"),
     LOGIN_MOBILE_ERROR(-208, "用户不存在"),
+    USER_NOT_FOUND(-207, "用户不存在"),
     LOGIN_PASSWORD_ERROR(-209, "密码错误"),
     LOGIN_AUTH_ERROR(-211, "未登录"),
 
