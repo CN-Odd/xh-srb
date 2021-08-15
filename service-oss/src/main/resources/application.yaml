@@ -1,11 +1,3 @@
-aliyun:
-  oss:
-    accessKeyID: LTAI5t5rmKYE3JLXDBXbRNWR
-    accessKeySecret: BUPUsbuH5mxWTcgY8LKxAm92ipa62L
-    bucketName: xh-srb-file
-    endpoint: oss-cn-hangzhou.aliyuncs.com
-
-
 spring:
   application:
     name: service-oss

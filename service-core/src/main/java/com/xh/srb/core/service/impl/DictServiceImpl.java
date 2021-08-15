@@ -9,6 +9,7 @@ import com.xh.srb.core.pojo.entity.Dict;
 import com.xh.srb.core.mapper.DictMapper;
 import com.xh.srb.core.service.DictService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import io.lettuce.core.RedisException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.beans.BeanUtils;
@@ -69,7 +70,11 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, Dict> implements Di
         if (dicts == null) {
             QueryWrapper<Dict> queryWrapper = new QueryWrapper<Dict>().eq("parent_id", parentId);
             dicts = baseMapper.selectList(queryWrapper);
-            redisTemplate.opsForValue().set(key, dicts);
+            try {
+                redisTemplate.opsForValue().set(key, dicts);
+            } catch (RedisException e) {
+                log.error("redis服务器异常：" + ExceptionUtils.getStackTrace(e));
+            }
         }
         List<DictDTO> dictDTOS = new ArrayList<>(dicts.size());
         dicts.forEach(dict -> {

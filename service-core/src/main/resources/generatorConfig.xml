@@ -9,7 +9,7 @@
     <context id="DB2Tables" targetRuntime="MyBatis3">
 <!--        <plugin type="com.chrm.mybatis.generator."></plugin>-->
         <jdbcConnection driverClass="com.mysql.cj.jdbc.Driver"
-                        connectionURL="jdbc:mysql://localhost:3306/srb_core?serverTimezone=Asia/Shanghai"
+                        connectionURL="jdbc:mysql://82.156.191.5:3306/srb_core?serverTimezone=Asia/Shanghai"
                         userId="srb"
                         password="srb">
         </jdbcConnection>
