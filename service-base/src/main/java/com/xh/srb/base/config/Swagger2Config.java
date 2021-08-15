@@ -71,5 +71,12 @@ public class Swagger2Config {
                 .build();
     }
 
-
+    @Bean
+    public Docket coreApiConfig() {
+        return new Docket(DocumentationType.SWAGGER_2)
+                .groupName("coreApi")
+                .select()
+                .paths(Predicates.and(PathSelectors.regex("/api/core.*")))
+                .build();
+    }
 }

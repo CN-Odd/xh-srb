@@ -1,7 +1,7 @@
 package com.xh.srb.sms.service.impl;
 
 import com.xh.common.exception.BusinessException;
-import com.xh.common.result.ResponseEum;
+import com.xh.common.result.ResponseEnum;
 import com.xh.srb.sms.service.SmsService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -22,9 +22,7 @@ public class SmsServiceImpl implements SmsService {
         File smsFile = new File(SMS_PATH);
         try {
             if (!smsFile.exists()) {
-
                 smsFile.createNewFile();
-
             }
             FileWriter fileWriter = new FileWriter(smsFile, true);
             fileWriter.write(mobile + ":" + smsMsg);
@@ -32,7 +30,7 @@ public class SmsServiceImpl implements SmsService {
             fileWriter.close();
         } catch (IOException e) {
             log.info("短信文件出现错误", e);
-            throw new BusinessException(ResponseEum.SEND_SMS_ERROR);
+            throw new BusinessException(ResponseEnum.SEND_SMS_ERROR);
         }
     }
 }

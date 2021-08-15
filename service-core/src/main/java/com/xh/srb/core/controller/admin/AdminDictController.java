@@ -3,7 +3,7 @@ package com.xh.srb.core.controller.admin;
 import com.alibaba.excel.EasyExcel;
 import com.xh.common.exception.BusinessException;
 import com.xh.common.result.R;
-import com.xh.common.result.ResponseEum;
+import com.xh.common.result.ResponseEnum;
 import com.xh.srb.core.pojo.dto.DictDTO;
 import com.xh.srb.core.pojo.dto.ExcelDictDTO;
 import com.xh.srb.core.service.DictService;
@@ -39,9 +39,9 @@ public class AdminDictController {
         try {
             InputStream inputStream = multipartFile.getInputStream();
             dictService.importData(inputStream);
-            return R.ok().massage("批量导入成功");
+            return R.ok().message("批量导入成功");
         } catch (Exception e) {
-            throw new BusinessException(ResponseEum.UPLOAD_ERROR);
+            throw new BusinessException(ResponseEnum.UPLOAD_ERROR);
         }
     }
 
@@ -59,7 +59,7 @@ public class AdminDictController {
 
             EasyExcel.write(outputStream, ExcelDictDTO.class).sheet("数据字典").doWrite(dictService.listDictData());
         } catch (Exception e) {
-            throw new BusinessException(ResponseEum.EXPORT_DATA_ERROR);
+            throw new BusinessException(ResponseEnum.EXPORT_DATA_ERROR);
         }
     }
 

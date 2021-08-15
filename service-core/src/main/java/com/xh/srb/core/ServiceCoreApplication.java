@@ -13,11 +13,6 @@ import org.springframework.context.annotation.ComponentScan;
 public class ServiceCoreApplication {
 
     public static void main(String[] args) {
-        try {
-            SpringApplication.run(ServiceCoreApplication.class, args);
-        } catch (Exception e) {
-            log.error(e.getMessage());
-            e.printStackTrace();
-        }
+        SpringApplication.run(ServiceCoreApplication.class, args);
     }
 }
