@@ -8,9 +8,11 @@ import com.xh.common.result.ResponseEnum;
 import com.xh.common.util.MD5;
 import com.xh.srb.base.util.JwtUtils;
 import com.xh.srb.core.mapper.UserAccountMapper;
+import com.xh.srb.core.mapper.UserLoginRecordMapper;
 import com.xh.srb.core.pojo.entity.UserAccount;
 import com.xh.srb.core.pojo.entity.UserInfo;
 import com.xh.srb.core.mapper.UserInfoMapper;
+import com.xh.srb.core.pojo.entity.UserLoginRecord;
 import com.xh.srb.core.pojo.query.UserInfoQuery;
 import com.xh.srb.core.pojo.vo.LoginVO;
 import com.xh.srb.core.pojo.vo.RegisterVO;
@@ -35,6 +37,8 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> i
 
     @Autowired
     private UserAccountMapper userAccountMapper;
+    @Autowired
+    private UserLoginRecordMapper userLoginRecordMapper;
 
     @Override
     public void register(RegisterVO registerVO) {
@@ -83,7 +87,11 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> i
         userInfoVO.setHeadImg(userInfo.getHeadImg());
         // 生成token
         userInfoVO.setToken(JwtUtils.createToken(userInfo.getId(), userInfo.getName()));
-
+        // 生成登录记录
+        UserLoginRecord userLoginRecord = new UserLoginRecord();
+        userLoginRecord.setUserId(userInfo.getId());
+        userLoginRecord.setIp(remoteAddr);
+        userLoginRecordMapper.insert(userLoginRecord);
 
         return userInfoVO;
     }
@@ -100,8 +108,7 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> i
         wrapper.eq(StringUtils.isNotBlank(mobile), "mobile", mobile)
                 .eq(status != null, "status", status)
                 .eq(userType != null, "user_type", userType);
-        Page<UserInfo> userInfoPage = baseMapper.selectPage(pageParam, wrapper);
-        return userInfoPage;
+        return baseMapper.selectPage(pageParam, wrapper);
     }
 
     @Override
