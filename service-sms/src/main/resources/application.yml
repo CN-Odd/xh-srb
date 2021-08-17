@@ -19,3 +19,10 @@ aliyun:
     key-secret: 你的keysecret
     template-code: 您的验证码为[%%%%]
     sign-name: xh
+
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 10000 #连接超时配置
+        readTimeout: 600000 #执行超时配置

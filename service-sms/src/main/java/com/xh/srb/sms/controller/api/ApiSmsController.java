@@ -5,6 +5,7 @@ import com.xh.common.result.R;
 import com.xh.common.result.ResponseEnum;
 import com.xh.common.util.RandomUtils;
 import com.xh.common.util.RegexValidateUtils;
+import com.xh.srb.sms.client.CoreUserInfoClient;
 import com.xh.srb.sms.service.SmsService;
 import com.xh.srb.sms.util.SmsProperties;
 import io.swagger.annotations.Api;
@@ -28,6 +29,9 @@ public class ApiSmsController {
     @Autowired
     private RedisTemplate<String, String> redisTemplate;
 
+    @Autowired
+    private CoreUserInfoClient coreUserInfoClient;
+
     @ApiOperation("获取验证码")
     @GetMapping("send/{mobile}")
     public R send(
@@ -35,6 +39,7 @@ public class ApiSmsController {
             @PathVariable(value = "mobile") String mobile) {
         Assert.isNull(mobile, ResponseEnum.MOBILE_NULL_ERROR);
         Assert.notTrue(RegexValidateUtils.checkCellphone(mobile), ResponseEnum.MOBELE_ERROR);
+        Assert.notTrue(!coreUserInfoClient.checkMobile(mobile), ResponseEnum.MOBILE_EXIST_ERROR);
         String key = "srb:sms:code:" + mobile;
         String code = redisTemplate.opsForValue().get(key);
         Assert.notNull(code, ResponseEnum.SMS_LIMIT_CONTROL_ERROR);
