@@ -70,5 +70,11 @@ public class UserInfoController {
         return R.ok();
     }
 
+    @ApiOperation("手机号码是否注册校验")
+    @GetMapping("/checkMobile/{mobile}")
+    public boolean checkMobile(@PathVariable("mobile") String mobile) {
+        return userInfoService.checkMobile(mobile);
+    }
+
 
 }

@@ -47,24 +47,25 @@
         <httpclient.version>4.5.1</httpclient.version>
     </properties>
 
-
-    <dependencies>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.13.2</version>
-            <scope>test</scope>
-        </dependency>
-    </dependencies>
-
     <dependencyManagement>
         <dependencies>
+            <!--Spring Cloud-->
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <!--Spring Cloud Alibaba-->
+            <dependency>
+                <groupId>com.alibaba.cloud</groupId>
+                <artifactId>spring-cloud-alibaba-dependencies</artifactId>
+                <version>${spring-cloud-alibaba.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
 
             <!--mybatis-plus-->
             <dependency>
@@ -85,29 +86,6 @@
                 <version>${velocity.version}</version>
             </dependency>
 
-            <dependency>
-                <groupId>mysql</groupId>
-                <artifactId>mysql-connector-java</artifactId>
-                <version>8.0.23</version>
-            </dependency>
-
-            <!--Spring Cloud-->
-            <dependency>
-                <groupId>org.springframework.cloud</groupId>
-                <artifactId>spring-cloud-dependencies</artifactId>
-                <version>${spring-cloud.version}</version>
-                <type>pom</type>
-                <!--            <scope>import</scope>-->
-            </dependency>
-
-            <!--Spring Cloud Alibaba-->
-            <dependency>
-                <groupId>com.alibaba.cloud</groupId>
-                <artifactId>spring-cloud-alibaba-dependencies</artifactId>
-                <version>${spring-cloud-alibaba.version}</version>
-                <type>pom</type>
-                <!--            <scope>import</scope>-->
-            </dependency>
             <!--swagger-->
             <dependency>
                 <groupId>io.springfox</groupId>
@@ -139,12 +117,6 @@
                 <groupId>commons-fileupload</groupId>
                 <artifactId>commons-fileupload</artifactId>
                 <version>${commons-fileupload.version}</version>
-                <exclusions>
-                    <exclusion>
-                        <artifactId>commons-io</artifactId>
-                        <groupId>commons-io</groupId>
-                    </exclusion>
-                </exclusions>
             </dependency>
 
             <!--commons-io-->
@@ -159,12 +131,6 @@
                 <groupId>com.alibaba</groupId>
                 <artifactId>easyexcel</artifactId>
                 <version>${alibaba.easyexcel.version}</version>
-                <exclusions>
-                    <exclusion>
-                        <artifactId>xmlbeans</artifactId>
-                        <groupId>org.apache.xmlbeans</groupId>
-                    </exclusion>
-                </exclusions>
             </dependency>
             <!--excel解析依赖-->
             <dependency>
@@ -202,12 +168,6 @@
                 <groupId>com.aliyun.oss</groupId>
                 <artifactId>aliyun-sdk-oss</artifactId>
                 <version>${aliyun-sdk-oss.version}</version>
-                <exclusions>
-                    <exclusion>
-                        <artifactId>aliyun-java-sdk-core</artifactId>
-                        <groupId>com.aliyun</groupId>
-                    </exclusion>
-                </exclusions>
             </dependency>
 
             <!--日期时间工具-->
@@ -230,8 +190,19 @@
                 <artifactId>httpclient</artifactId>
                 <version>${httpclient.version}</version>
             </dependency>
+
+
         </dependencies>
     </dependencyManagement>
+
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
 
 
     <build>

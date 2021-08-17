@@ -6,7 +6,10 @@ spring:
     name: service-sms
   profiles:
     active: dev
-
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 82.156.191.5:8848
 
 #阿里云短信
 aliyun:
