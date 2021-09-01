@@ -7,6 +7,7 @@ import com.xh.common.util.RegexValidateUtils;
 import com.xh.srb.base.util.JwtUtils;
 import com.xh.srb.core.pojo.vo.LoginVO;
 import com.xh.srb.core.pojo.vo.RegisterVO;
+import com.xh.srb.core.pojo.vo.UserIndexVO;
 import com.xh.srb.core.pojo.vo.UserInfoVO;
 import com.xh.srb.core.service.UserInfoService;
 import io.swagger.annotations.Api;
@@ -20,7 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 
 @Api(tags = "会员接口")
 @Slf4j
-@CrossOrigin
+//@CrossOrigin
 @RestController
 @RequestMapping("/api/core/userInfo")
 public class UserInfoController {
@@ -62,7 +63,7 @@ public class UserInfoController {
     }
 
     @ApiOperation("令牌校验")
-    @GetMapping("/checkout")
+    @GetMapping("/checkToken")
     public R checkOut(HttpServletRequest request) {
         String token = request.getHeader("token");
         boolean checkToken = JwtUtils.checkToken(token);
@@ -76,5 +77,12 @@ public class UserInfoController {
         return userInfoService.checkMobile(mobile);
     }
 
+
+    @ApiOperation("查询客户基础信息")
+    @GetMapping("/userIndex/{mobile}")
+    public R getUserIndex(@PathVariable("mobile") String mobile ) {
+        UserIndexVO userIndexVO = userInfoService.getUserIndex(mobile);
+        return R.ok().setResultData("userIndexVO", userIndexVO);
+    }
 
 }

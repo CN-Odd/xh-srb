@@ -59,31 +59,58 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, Dict> implements Di
     @Override
     public List<DictDTO> listByParentId(Long parentId) {
         List<Dict> dicts = null;
+        List<DictDTO> dictDTOS = null;
         String key = "srb:core:dictList:" + parentId;
         try {
-            dicts = (List<Dict>) redisTemplate.opsForValue().get(key);
+            dictDTOS = (List<DictDTO>) redisTemplate.opsForValue().get(key);
             log.info("从redis取值，key：" + key);
         } catch (Exception e) {
             //此处不抛出异常，继续执行后面的代码
             log.error("redis服务器异常：" + ExceptionUtils.getStackTrace(e));
         }
-        if (dicts == null) {
+        if (dictDTOS == null) {
             QueryWrapper<Dict> queryWrapper = new QueryWrapper<Dict>().eq("parent_id", parentId);
             dicts = baseMapper.selectList(queryWrapper);
+            dictDTOS = new ArrayList<>(dicts.size());
+            List<DictDTO> finalDictDTOS = dictDTOS;
+            dicts.forEach(dict -> {
+                DictDTO dictDTO = new DictDTO();
+                BeanUtils.copyProperties(dict, dictDTO);
+                this.hasChildren(dictDTO);
+                finalDictDTOS.add(dictDTO);
+            });
             try {
-                redisTemplate.opsForValue().set(key, dicts);
+                redisTemplate.opsForValue().set(key, dictDTOS);
             } catch (RedisException e) {
                 log.error("redis服务器异常：" + ExceptionUtils.getStackTrace(e));
             }
         }
-        List<DictDTO> dictDTOS = new ArrayList<>(dicts.size());
-        dicts.forEach(dict -> {
-            DictDTO dictDTO = new DictDTO();
-            BeanUtils.copyProperties(dict, dictDTO);
-            this.hasChildren(dictDTO);
-            dictDTOS.add(dictDTO);
-        });
         return dictDTOS;
+    }
+
+    @Override
+    public List<DictDTO> findByDictCode(String code) {
+        QueryWrapper<Dict> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("dict_code", code);
+        Dict dict = baseMapper.selectOne(queryWrapper);
+        List<DictDTO> dictDTOS = this.listByParentId(dict.getId());
+        return dictDTOS;
+    }
+
+    @Override
+    public String getNameByParentDictCodeAndValue(String dictCode, Integer value) {
+//        QueryWrapper<Dict> queryWrapper = new QueryWrapper<>();
+//        queryWrapper.eq("dict_code", dictCode);
+//        Dict dict = baseMapper.selectOne(queryWrapper);
+        List<DictDTO> dictDTOS = this.findByDictCode(dictCode);
+        String dictName = null;
+        for(DictDTO dictDTO : dictDTOS) {
+            if (dictDTO.getValue().equals(value)) {
+                dictName = dictDTO.getName();
+                break;
+            }
+        }
+        return dictName;
     }
 
     private void hasChildren(DictDTO dictDTO) {

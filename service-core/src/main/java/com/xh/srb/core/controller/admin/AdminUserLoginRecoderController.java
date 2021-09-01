@@ -16,7 +16,7 @@ import java.util.List;
 @Slf4j
 @RestController
 @RequestMapping("/admin/core/userLoginRecord")
-@CrossOrigin
+//@CrossOrigin
 public class AdminUserLoginRecoderController {
 
     @Autowired
@@ -28,6 +28,6 @@ public class AdminUserLoginRecoderController {
             @ApiParam("用户ID")
             @PathVariable("userId") Long userId) {
         List<UserLoginRecord> recordList = userLoginRecordService.listTop50(userId);
-        return R.ok();
+        return R.ok().setResultData("list", recordList);
     }
 }

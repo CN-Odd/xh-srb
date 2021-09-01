@@ -21,4 +21,8 @@ public interface DictService extends IService<Dict> {
     List<ExcelDictDTO> listDictData();
 
     List<DictDTO> listByParentId(Long parentId);
+
+    List<DictDTO> findByDictCode(String code);
+
+    String getNameByParentDictCodeAndValue(String dictCode, Integer value);
 }

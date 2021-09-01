@@ -15,9 +15,9 @@ import java.io.IOException;
 import java.io.InputStream;
 
 @Api(tags = "阿里云存储")
-@CrossOrigin
+//@CrossOrigin
 @RestController
-@RequestMapping("/api/oss")
+@RequestMapping("/api/oss/file")
 public class ApiOssController {
 
     @Autowired
@@ -29,7 +29,7 @@ public class ApiOssController {
             @ApiParam("文件")
             @RequestParam("file") MultipartFile file,
             @ApiParam("所属模块")
-            @RequestParam("model") String model) {
+            @RequestParam("module") String model) {
 
         String url = null;
         try {

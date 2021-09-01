@@ -24,14 +24,24 @@ public enum ResponseEnum {
     SEND_SMS_ERROR(-203, "短信发送出现问题"),
     CODE_ERROR(-203, "验证码错误"),
     MOBILE_EXIST_ERROR(-207, "手机已经注册"),
+    MOBILE_NOT_BELONG_YOU(-207, "手机号不属于你"),
     LOGIN_MOBILE_ERROR(-208, "用户不存在"),
     USER_NOT_FOUND(-207, "用户不存在"),
     LOGIN_PASSWORD_ERROR(-209, "密码错误"),
     LOGIN_AUTH_ERROR(-211, "未登录"),
 
     UPLOAD_ERROR(-301, "文件上传错误"),
+    USER_BIND_ID_CARD_EXIST_ERROR(-301, "身份证号码已经绑定"),
+    USER_BINDED(-301, "用户已经绑定了"),
+    BIND_ERROR(-309, "用户绑定失败"),
 
-    SMS_LIMIT_CONTROL_ERROR(-501, "短信获取过于频繁");
+    NOT_SUCH_BORROWER(-401, "没有借款人信息"),
+    OUT_OF_AMOUNT(-402, "超过借款金额"),
+    BORROWER_STATUS_ERROR(-409, "借款人状态异常"),
+
+    SMS_LIMIT_CONTROL_ERROR(-501, "短信获取过于频繁")
+    , USER_NO_BIND_ERROR(-309, "用户未绑定")
+    , USER_NO_AMOUNT_ERROR(-302, "用户审核不通过");
 
 
     private Integer code;

@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.concurrent.TimeUnit;
 
 @Api(tags = "短信管理")
-@CrossOrigin
+//@CrossOrigin
 @RestController
 @RequestMapping("/api/sms")
 public class ApiSmsController {

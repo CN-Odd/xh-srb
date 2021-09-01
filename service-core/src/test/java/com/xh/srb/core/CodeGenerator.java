@@ -8,6 +8,7 @@ import com.baomidou.mybatisplus.generator.config.GlobalConfig;
 import com.baomidou.mybatisplus.generator.config.PackageConfig;
 import com.baomidou.mybatisplus.generator.config.StrategyConfig;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
+import com.xh.common.util.MD5;
 import org.junit.jupiter.api.Test;
 
 public class CodeGenerator {
@@ -57,5 +58,14 @@ public class CodeGenerator {
 
         // 6、执行
         mpg.execute();
+    }
+
+    @Test
+    public void testMD5() {
+        String key = "7|86f47ef492f04c779dc6ca5dfa6e0b93|0001|成功|1629809142174|9876543210";
+        String encrypt = MD5.encrypt(key);
+        String encrypt2 = MD5.encrypt2(key);
+        System.out.println(encrypt);
+        System.out.println(encrypt2);
     }
 }

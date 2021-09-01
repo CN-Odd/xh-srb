@@ -16,10 +16,13 @@ import com.xh.srb.core.pojo.entity.UserLoginRecord;
 import com.xh.srb.core.pojo.query.UserInfoQuery;
 import com.xh.srb.core.pojo.vo.LoginVO;
 import com.xh.srb.core.pojo.vo.RegisterVO;
+import com.xh.srb.core.pojo.vo.UserIndexVO;
 import com.xh.srb.core.pojo.vo.UserInfoVO;
 import com.xh.srb.core.service.UserInfoService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.apache.catalina.User;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -129,5 +132,32 @@ public class UserInfoServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> i
         queryWrapper.eq("mobile", mobile);
         Integer count = baseMapper.selectCount(queryWrapper);
         return count > 0;
+    }
+
+    @Override
+    public UserIndexVO getUserIndex(String mobile) {
+        UserIndexVO userIndexVO = new UserIndexVO();
+        QueryWrapper<UserInfo> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("mobile", mobile);
+        UserInfo userInfo = baseMapper.selectOne(queryWrapper);
+        Assert.isNull(userInfo, ResponseEnum.USER_NOT_FOUND);
+
+        BeanUtils.copyProperties(userInfo, userIndexVO);
+
+        QueryWrapper<UserAccount> queryWrapperUserAccount = new QueryWrapper<>();
+        queryWrapperUserAccount.eq("user_id", userInfo.getId());
+        UserAccount userAccount = userAccountMapper.selectOne(queryWrapperUserAccount);
+        userIndexVO.setAmount(userAccount.getAmount());
+        userIndexVO.setFreezeAmount(userAccount.getFreezeAmount());
+
+        QueryWrapper<UserLoginRecord> userLoginRecordQueryWrapper = new QueryWrapper<>();
+        userLoginRecordQueryWrapper.eq("user_id", userInfo.getId())
+                .orderByDesc("id")
+                .last("limit 1");
+        UserLoginRecord userLoginRecord = userLoginRecordMapper.selectOne(userLoginRecordQueryWrapper);
+
+        userIndexVO.setLastLoginTime(userLoginRecord.getCreateTime());
+
+        return userIndexVO;
     }
 }
